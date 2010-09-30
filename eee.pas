@@ -1079,17 +1079,20 @@ begin
     appname	:= t.appname;
   end;
 
-  temp		:= getshortpathname(getenv('HOME'));
+  temp		:= getshortpathname(getenv('EEE_TEMP'));
   if (temp = '') then begin
-  temp		:= getshortpathname(getenv('USERPROFILE'));
+  temp		:= getshortpathname(getenv('HOME'));
     if (temp = '') then begin
-      temp	:= getshortpathname(getenv('TEMP'));
+    temp	:= getshortpathname(getenv('USERPROFILE'));
       if (temp = '') then begin
-        {$IFDEF WIN32}
-          temp	:= 'c:';
-        {$ELSE}
-          temp	:= '/tmp';
-        {$ENDIF}
+      temp	:= getshortpathname(getenv('TEMP'));
+        if (temp = '') then begin
+          {$IFDEF WIN32}
+            temp	:= 'c:';
+          {$ELSE}
+            temp	:= '/tmp';
+          {$ENDIF}
+        end;
       end;
     end;
   end;
